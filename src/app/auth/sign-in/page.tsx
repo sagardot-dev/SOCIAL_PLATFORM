@@ -1,8 +1,11 @@
+import { SignInView } from '@/feature/auth/ui/view/sign-view'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <div>
+      <SignInView/>
+    </div>
   )
 }
 
