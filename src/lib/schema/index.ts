@@ -21,11 +21,6 @@ export const CommentSchema = z.object({
 });
 
 export const PostSchema = z.object({
-  title: z
-    .string()
-    .trim()
-    .min(1, "title is required is required")
-    .max(120, "Title must be under 120 characters"),
   content: z
     .string()
     .trim()

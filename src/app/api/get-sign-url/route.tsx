@@ -16,7 +16,9 @@ const client = new S3Client({
 
 export async function POST(req: Request) {
   const { fileName, ext } = await req.json();
+
   if (!fileName || !ext) return;
+
   const FileName = `uploads-${fileName}-${crypto.randomUUID()}.${ext}`;
   const command = new PutObjectCommand({
     Bucket: bucket,

@@ -10,8 +10,9 @@ import { Header } from "./header";
 import { BackButton } from "./back-button";
 
 interface CardWarpperProps {
+  header?: string;
   children: React.ReactNode;
-  headerlabel: string;
+  headerlabel?: string;
   backButtonlable?: string;
   backButtonherf?: string;
   showSocial?: boolean;
@@ -19,19 +20,25 @@ interface CardWarpperProps {
 
 export const CardWrapper = ({
   children,
+  header = "Social app",
   headerlabel,
   backButtonlable,
   backButtonherf,
 }: CardWarpperProps) => {
   return (
-    <Card className=" md:min-w-110 min-w-95 max-w-lg px-3  flex flex-col py-9 mx-auto ">
+    <Card className=" md:min-w-110 min-w-95 px-3 flex flex-col py-7 mx-auto max-w-xl ">
       <CardHeader>
-        <Header header="Social app" label={headerlabel} />
+        <Header header={header} label={headerlabel || ""} />
       </CardHeader>
       <CardContent>{children}</CardContent>
-      <CardFooter>
-        <BackButton herf={backButtonherf || ""} label={backButtonlable || ""} />
-      </CardFooter>
+      {backButtonlable && (
+        <CardFooter>
+          <BackButton
+            herf={backButtonherf || ""}
+            label={backButtonlable || ""}
+          />
+        </CardFooter>
+      )}
     </Card>
   );
 };
