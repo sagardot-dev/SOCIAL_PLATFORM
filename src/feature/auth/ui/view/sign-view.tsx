@@ -14,7 +14,7 @@ export const SignInView = () => {
   const [tab, setTab] = useState<"register" | "login">("register");
 
   return (
-    <div className=" w-full min-h-0 pt-20   flex justify-center">
+    <div className=" w-full min-h-screen pt-20 flex justify-center relative">
       <div className=" max-w-7xl mx-auto flex-col flex gap-y-6">
         <div className=" flex flex-col justify-center items-center gap-y-1 ">
           <h1 className=" text-4xl font-bold tracking-tight ">Social</h1>
@@ -27,7 +27,7 @@ export const SignInView = () => {
           value={tab}
           onValueChange={(value) => setTab(value as "login" | "register")}
         >
-          <TabsList className=" min-w-md bg-accent-foreground/5 p-p border border-border/50 rounded-full backdrop-blur-2xl mb-2 h-11">
+          <TabsList className=" min-w-md bg-accent/50 backdrop-blur-sm p-p border border-border/50 rounded-full  mb-2 h-11">
             <TabsTrigger className=" rounded-full" value="login">
               Login
             </TabsTrigger>

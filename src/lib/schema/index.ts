@@ -17,6 +17,7 @@ export const CommentSchema = z.object({
     .string()
     .min(1, "comment cant be empty")
     .max(300, "Comments must be under 300 characters"),
+     image: z.string().optional(),
 });
 
 export const PostSchema = z.object({

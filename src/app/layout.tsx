@@ -29,7 +29,7 @@ export default function RootLayout({
       <body className={`${manrope.variable} antialiased bar`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
