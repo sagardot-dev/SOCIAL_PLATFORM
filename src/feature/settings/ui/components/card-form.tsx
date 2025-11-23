@@ -29,6 +29,7 @@ import axios from "axios";
 import { CustomToast } from "@/components/global/custom-toast";
 import Image from "next/image";
 import { CameraIcon } from "lucide-react";
+import { s3URL } from "@/const ";
 
 export const CardComponent = () => {
   const [loading, setLoading] = useState(false);
@@ -65,8 +66,8 @@ export const CardComponent = () => {
             headers: { "Content-Type": file.type },
           });
           const signedUrl = data.data;
-          const publicUrl = signedUrl.split("?")[0];
-          form.setValue("image", publicUrl);
+          const key = signedUrl.split(".amazonaws.com/")[1].split("?")[0];
+          form.setValue("image", key);
           if (res.statusText === "OK") {
             CustomToast("Upload successfully", "your image is uploaded!");
           }
@@ -155,13 +156,13 @@ export const CardComponent = () => {
                             >
                               <CameraIcon className="text-accent-foreground size-4" />
                             </Button>
-                            {!preview ? (
+                            {!preview && !session?.user?.image ? (
                               GenAvatarImage({
                                 name: session?.user?.name || "unknown",
                               })
                             ) : (
                               <Image
-                                src={preview}
+                                src={`${s3URL}/${session.user.image}`}
                                 width={39}
                                 height={39}
                                 alt="preview"
@@ -192,7 +193,6 @@ export const CardComponent = () => {
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="email"
@@ -221,7 +221,7 @@ export const CardComponent = () => {
         </div>
 
         {/* Account Information Section */}
-        <div className="space-y-4 mt-8">
+        <div className="space-y-4 pt-6  border-t border-accent-foreground/30">
           <h3 className="text-xl font-semibold text-sidebar-foreground/30 ">
             Account Information
           </h3>

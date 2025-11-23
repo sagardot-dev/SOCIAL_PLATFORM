@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,18 +12,34 @@ import { CommentForm } from "./comment-form";
 import { CommentBox } from "./comment-draw";
 import { randomName } from "@/lib/helpers/randoem-name";
 import { useToggleReaction } from "../../server/use-like";
+import { s3URL } from "@/const ";
 
-export function PostCard({ post }: { post: PostType }) {
+export function PostCard({
+  post,
+}: {
+  post: PostType;
+}) {
   const useLikeMutate = useToggleReaction();
   const [open, setOpen] = useState(false);
+
+  const [isLiked, setIsLiked] = useState<boolean>(post.isLiked || false);
+
   const user = post.user;
+
+  const handleLike = () => {
+    setIsLiked((val) => !val);
+    useLikeMutate.mutate(post.id);
+  };
 
   return (
     <Card className="w-full max-w-2xl rounded-xl shadow-sm border border-border">
       <CardHeader className="flex flex-row gap-3 items-center">
         {post.user?.image ? (
           <Avatar className="h-11 w-11">
-            <AvatarImage src={user?.image || ""} alt={user?.name || "U"} />
+            <AvatarImage
+              src={`${s3URL}/${user?.image}` || ""}
+              alt={user?.name || "U"}
+            />
             <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
           </Avatar>
         ) : (
@@ -53,13 +69,13 @@ export function PostCard({ post }: { post: PostType }) {
         </p>
 
         {post.image && (
-          <div className="relative w-full overflow-hidden rounded-lg border border-border">
+          <div className="relative w-full flex justify-center items-center overflow-hidden rounded-lg border border-border">
             <Image
-              src={post.image}
+              src={`${s3URL}/${post.image}`}
               alt="post visual"
-              width={800}
-              height={500}
-              className="rounded-lg w-full h-auto object-cover animate-fadeIn"
+              width={450}
+              height={450}
+              className="rounded-lg  object-cover animate-fadeIn"
             />
           </div>
         )}
@@ -69,12 +85,17 @@ export function PostCard({ post }: { post: PostType }) {
         <div className="flex items-center justify-between text-muted-foreground w-full">
           <div className="flex items-center md:gap-2 shrink md:mr-2">
             <Button
-              onClick={() => useLikeMutate.mutate(post.id)}
-              variant={post.isLiked ? "default" : "ghost"}
+              variant={"outline"}
+              disabled={useLikeMutate.isPending}
+              onClick={handleLike}
               size="sm"
               className="gap-2 hover:bg-accent/50 rounded-lg flex justify-center items-center px-2!"
             >
-              <Heart className=" size-3" /> {post.reactions?.length || 0}
+              <Heart
+                fill={isLiked ? "currentColor" : "none"}
+                className=" size-3"
+              />{" "}
+              {post.reactions?.length || 0}
             </Button>
             <Button
               onClick={() => setOpen(true)}

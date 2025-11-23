@@ -87,3 +87,13 @@ export interface UserWithPosts {
     reactions: number;
   };
 }
+
+export type LikeResponse = {
+  success: boolean;
+  title: string;
+  code: string;
+  type: string;
+  data: {
+    status: "liked" | "unliked";
+  };
+};

@@ -8,6 +8,7 @@ import { authClient } from "@/lib/auth-client";
 import { GenAvatarImage } from "@/components/global/generate-avavtar";
 import { randomName } from "@/lib/helpers/randoem-name";
 import { useRouter } from "next/navigation";
+import { s3URL } from "@/const ";
 
 export function ProfileHeader({
   totalPosts = 0,
@@ -28,7 +29,7 @@ export function ProfileHeader({
         {session.user?.image ? (
           <Avatar className="h-11 w-11">
             <AvatarImage
-              src={session.user?.image || ""}
+              src={`${s3URL}/${session.user?.image}` || ""}
               alt={session.user?.name || "U"}
             />
             <AvatarFallback>
@@ -55,8 +56,10 @@ export function ProfileHeader({
 
             <div className="flex items-center">
               <Button
-             onClick={()=> router.push('/setting')} 
-              variant="default" className="px-4 py-2">
+                onClick={() => router.push("/setting")}
+                variant="default"
+                className="px-4 py-2"
+              >
                 Edit Profile
               </Button>
             </div>

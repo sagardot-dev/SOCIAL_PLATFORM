@@ -10,6 +10,7 @@ import { GenAvatarImage } from "@/components/global/generate-avavtar";
 import { randomName } from "@/lib/helpers/randoem-name";
 import { authClient } from "@/lib/auth-client";
 import { CommentBox } from "@/feature/home/ui/components/comment-draw";
+import { s3URL } from "@/const ";
 
 export function PostCard({
   id,
@@ -37,7 +38,7 @@ export function PostCard({
         {session.user?.image ? (
           <Avatar className="h-11 w-11">
             <AvatarImage
-              src={session.user?.image || ""}
+              src={`${s3URL}/${session.user?.image}` || ""}
               alt={session.user?.name || "U"}
             />
             <AvatarFallback>

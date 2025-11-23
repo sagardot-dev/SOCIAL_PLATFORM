@@ -17,3 +17,5 @@ export const menu = [
     icon: Settings,
   },
 ];
+
+export const s3URL = 'https://dqs8qc9o4jfra.cloudfront.net'

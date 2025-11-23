@@ -60,13 +60,12 @@ export const PostForm = () => {
           return;
         },
         onSuccess: async (data) => {
-          console.log(data);
           const res = await axios.put(data.data, file, {
             headers: { "Content-Type": file.type },
           });
           const signedUrl = data.data;
-          const publicUrl = signedUrl.split("?")[0];
-          form.setValue("image", publicUrl);
+          const key = signedUrl.split(".amazonaws.com/")[1].split("?")[0];
+          form.setValue("image", key);
           if (res.statusText === "OK") {
             CustomToast("Upload successfully", "your image is uploaded!");
           }
