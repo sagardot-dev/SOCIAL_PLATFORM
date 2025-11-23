@@ -10,10 +10,7 @@ export const HomeView = () => {
           <DailogPopUp />
         </div>
         <div
-          className="w-full flex-1 h-full max-w-4xl mx-auto 
-     flex flex-col justify-start 
-     px-2 py-3 rounded-md 
-     overflow-y-auto gap-y-5 bar max-h-195 md:max-h-208 mask-b-from-90% mask-t-from-98%"
+          className="w-full flex-1 h-full max-w-4xl mx-auto flex flex-col justify-start px-2 py-3 rounded-md overflow-y-auto gap-y-5 bar max-h-195 md:max-h-208 mask-b-from-96% mask-t-from-98%"
         >
           <PostList />
         </div>

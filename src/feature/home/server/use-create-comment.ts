@@ -29,9 +29,9 @@ export const useCreateComment = () => {
 
     onSuccess: (data) => {
       CustomToast(data.title, data.code);
-      queryClient.invalidateQueries({
-        queryKey: ["get-posts", "get-post", 'comments'],
-      });
+      queryClient.invalidateQueries({ queryKey: ["getposts"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["getpost"], exact: false });
+      queryClient.invalidateQueries({ queryKey: ["comments"], exact: false });
     },
   });
 };

@@ -11,9 +11,10 @@ import { GenAvatarImage } from "@/components/global/generate-avavtar";
 import { CommentForm } from "./comment-form";
 import { CommentBox } from "./comment-draw";
 import { randomName } from "@/lib/helpers/randoem-name";
+import { useToggleReaction } from "../../server/use-like";
 
 export function PostCard({ post }: { post: PostType }) {
-  const [active, setActive] = useState(false);
+  const useLikeMutate = useToggleReaction();
   const [open, setOpen] = useState(false);
   const user = post.user;
 
@@ -68,10 +69,8 @@ export function PostCard({ post }: { post: PostType }) {
         <div className="flex items-center justify-between text-muted-foreground w-full">
           <div className="flex items-center md:gap-2 shrink md:mr-2">
             <Button
-              onClick={() => {
-                setActive((val) => !val);
-              }}
-              variant={active ? "default" : "ghost"}
+              onClick={() => useLikeMutate.mutate(post.id)}
+              variant={post.isLiked ? "default" : "ghost"}
               size="sm"
               className="gap-2 hover:bg-accent/50 rounded-lg flex justify-center items-center px-2!"
             >

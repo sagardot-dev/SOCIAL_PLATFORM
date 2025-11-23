@@ -29,3 +29,11 @@ export const PostSchema = z.object({
     .max(500, "content must be under 500 characters"),
   image: z.string().optional(),
 });
+
+
+export const UserSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email"),
+  image: z.string().optional(),
+});
+

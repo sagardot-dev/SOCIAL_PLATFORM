@@ -23,9 +23,7 @@ export const useCreatePost = () => {
     },
     onSuccess: (data) => {
       CustomToast(data.title, data.code);
-      queryClient.invalidateQueries({
-        queryKey: ["get-posts", "get-post"],
-      });
+      queryClient.invalidateQueries({ queryKey: ["getposts"] });
     },
   });
 

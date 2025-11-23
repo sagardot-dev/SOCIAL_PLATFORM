@@ -1,8 +1,11 @@
+import { SettingsView } from '@/feature/settings/ui/view/home-view'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <>
+      <SettingsView/>
+    </>
   )
 }
 

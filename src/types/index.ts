@@ -37,6 +37,7 @@ export interface PostType {
       image: string | null;
     };
   }[];
+  isLiked?: boolean;
 }
 
 export interface CommentType {

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { GenAvatarImage } from "@/components/global/generate-avavtar";
 import { randomName } from "@/lib/helpers/randoem-name";
+import { useRouter } from "next/navigation";
 
 export function ProfileHeader({
   totalPosts = 0,
@@ -18,6 +19,7 @@ export function ProfileHeader({
   totalReactions?: number;
 }) {
   const { data: session } = authClient.useSession();
+  const router = useRouter();
   if (!session) return <p>Please login</p>;
 
   return (
@@ -51,12 +53,11 @@ export function ProfileHeader({
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <Button variant="default" className="px-4 py-2">
+            <div className="flex items-center">
+              <Button
+             onClick={()=> router.push('/setting')} 
+              variant="default" className="px-4 py-2">
                 Edit Profile
-              </Button>
-              <Button variant="outline" className="px-3 py-2">
-                Settings
               </Button>
             </div>
           </div>
