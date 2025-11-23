@@ -1,8 +1,11 @@
+import { ProfileView } from '@/feature/profile/ui/view/profile-view'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>Page</div>
+   <>
+   <ProfileView/>
+   </>
   )
 }
 

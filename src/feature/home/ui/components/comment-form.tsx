@@ -135,10 +135,9 @@ export const CommentForm = ({ postId }: { postId: string }) => {
                           type="file"
                           accept="image/*"
                           className="hidden"
-                          id="cameraInput"
+                          id="postImageInput"
                           onChange={(e) => {
                             onUpload(e);
-                            
                           }}
                         />
                         <Button
@@ -146,7 +145,7 @@ export const CommentForm = ({ postId }: { postId: string }) => {
                           disabled={pending}
                           type="button"
                           onClick={() =>
-                            document.getElementById("cameraInput")?.click()
+                            document.getElementById("postImageInput")?.click()
                           }
                           className=""
                         >

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { Toaster } from "sonner";
 import Providers from "@/provider/provider";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const manrope = Manrope({
   variable: "--font-poppins",
@@ -33,7 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Providers>{children}</Providers>
+          <Providers>
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </Providers>
           <Toaster />
         </ThemeProvider>
       </body>

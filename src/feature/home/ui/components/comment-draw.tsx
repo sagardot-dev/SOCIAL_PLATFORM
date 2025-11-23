@@ -104,7 +104,10 @@ export const CommentBox = ({
                         className="w-30 flex flex-col gap-y-0! p-1!"
                         align="end"
                       >
-                        <DropdownMenuLabel asChild className=" flex gap-x-2">
+                        <DropdownMenuLabel
+                          asChild
+                          className=" flex gap-x-2 justify-start"
+                        >
                           <Button
                             className=" w-full"
                             size={"icon-sm"}
@@ -114,7 +117,10 @@ export const CommentBox = ({
                             Edit
                           </Button>
                         </DropdownMenuLabel>
-                        <DropdownMenuLabel asChild>
+                        <DropdownMenuLabel
+                          className=" flex gap-x-2 justify-start"
+                          asChild
+                        >
                           <Button
                             size={"icon-sm"}
                             className=" w-full"

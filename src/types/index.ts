@@ -62,3 +62,27 @@ export interface CommentType {
   }[];
 }
 
+export interface UserWithPosts {
+  id: string;
+  name: string;
+  email: string;
+  image: string | null;
+  createdAt: Date | string;
+
+  post: {
+    id: string;
+    content: string;
+    image: string | null;
+    createdAt: Date | string;
+    _count: {
+      comments: number;
+      reactions: number;
+    };
+  }[];
+
+  _count: {
+    post: number;
+    comments: number;
+    reactions: number;
+  };
+}
