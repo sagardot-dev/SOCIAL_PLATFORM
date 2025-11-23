@@ -13,6 +13,7 @@ export const LoginSchema = z.object({
 });
 
 export const CommentSchema = z.object({
+  postId: z.string().min(1,'postId id required'),
   content: z
     .string()
     .min(1, "comment cant be empty")

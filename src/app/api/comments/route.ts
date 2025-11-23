@@ -5,10 +5,7 @@ import prisma from "@/lib/db/prisma";
 import { CommentSchema } from "@/lib/schema";
 import { headers } from "next/headers";
 
-export async function Post(
-  req: Request,
-  { params }: { params: Promise<{ postId: string }> }
-) {
+export async function POST(req: Request) {
   const body = await req.json();
   const result = CommentSchema.safeParse(body);
   if (!result.success) {
@@ -25,7 +22,6 @@ export async function Post(
   }
 
   const data = result.data;
-  const { postId } = await params;
 
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -47,7 +43,7 @@ export async function Post(
       data: {
         content: data.content,
         image: data.image,
-        postId: postId,
+        postId: data.postId,
         userId: session.user.id,
       },
     });
@@ -74,10 +70,7 @@ export async function Post(
   }
 }
 
-export async function Get(
-  req: Request,
-  { params }: { params: Promise<{ postId: string }> }
-) {
+export async function GET(req: Request) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -92,8 +85,16 @@ export async function Get(
       { status: HttpStatus.UNAUTHORIZED }
     );
   }
+  const url = new URL(req.url);
+  const postId = url.searchParams.get("postId");
+  console.log(postId);
 
-  const { postId } = await params;
+  if (!postId) {
+    return Response.json(
+      createResponse(false, ResponseTitle.NOT_FOUND, "Missing post id"),
+      { status: HttpStatus.NOT_FOUND }
+    );
+  }
 
   try {
     const userSelect = {

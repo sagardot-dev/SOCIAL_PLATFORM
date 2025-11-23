@@ -76,7 +76,7 @@ export async function POST(req: Request) {
         false,
         ResponseTitle.INTERNAL_SERVER_ERROR,
         "Something went wrong when creating post",
-        error
+        { message: error instanceof Error ? error.message : "Unknown error" }
       ),
       {
         status: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -166,7 +166,7 @@ export async function GET(req: Request) {
         false,
         ResponseTitle.INTERNAL_SERVER_ERROR,
         "Something went wrong when creating post",
-        error
+        { message: error instanceof Error ? error.message : "Unknown error" }
       ),
       {
         status: HttpStatus.INTERNAL_SERVER_ERROR,

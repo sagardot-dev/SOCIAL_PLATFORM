@@ -11,38 +11,35 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import React, { ChangeEvent, useState } from "react";
-import { PostSchema } from "@/lib/schema";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { CommentSchema } from "@/lib/schema";
 
 import { CustomToast } from "@/components/global/custom-toast";
-import {
-  FormError,
-  FormSuccess,
-} from "@/feature/auth/ui/components/form-message";
-import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { CameraIcon, XIcon } from "lucide-react";
-import { useCreatePost } from "../../server/use-create-post";
+import { CameraIcon, Send, XIcon } from "lucide-react";
+import { useCreateComment } from "../../server/use-create-comment";
 
-export const PostForm = () => {
-  const postMutation = useCreatePost();
+export const CommentForm = ({ postId }: { postId: string }) => {
+  const commentMutation = useCreateComment();
   const signUrlMutation = useGetSignUrlMutation();
   const [preview, setPreview] = useState("");
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const form = useForm<z.infer<typeof PostSchema>>({
-    resolver: zodResolver(PostSchema),
+  const form = useForm<z.infer<typeof CommentSchema>>({
+    resolver: zodResolver(CommentSchema),
     defaultValues: {
+      postId,
       content: "",
       image: "",
     },
   });
+
+  useEffect(() => {
+    form.setValue("postId", postId);
+  }, [postId, form]);
 
   const onUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -76,57 +73,57 @@ export const PostForm = () => {
   };
 
   const pending =
-    signUrlMutation.isPending || loading || postMutation.isPending;
+    signUrlMutation.isPending || loading || commentMutation.isPending;
 
-  async function onSubmit(values: z.infer<typeof PostSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof CommentSchema>) {
+    console.log(form);
     setLoading(true);
-    setSuccess("");
-    setError("");
-    postMutation.mutate(
+    commentMutation.mutate(
       {
+        postId,
         content: values.content,
         image: values.image,
       },
       {
         onError: (error) => {
           console.log(error);
-          setError(error?.message || "error occur");
-          setSuccess("");
           setLoading(false);
         },
-        onSuccess: (data) => {
-          setSuccess(data.title);
+        onSuccess: () => {
           setLoading(false);
-          setError("");
+          form.reset();
+          setPreview("");
         },
       }
     );
   }
   return (
-    <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
-          <div className=" flex-col flex gap-y-4">
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Content</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      className=" rounded-sm h-25 resize-none bar"
-                      disabled={loading}
-                      placeholder="What is on your mind"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className=" w-full flex justify-between items-center">
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit, (error) => {
+          console.log(error);
+        })}
+        className="space-y-7 w-full flex flex-1"
+      >
+        <div className="grid grid-cols-4 md:gap-x-2 gap-x-1 justify-center items-center w-full">
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem className=" col-span-3">
+                <FormControl>
+                  <Input
+                    className=" rounded-sm w-full "
+                    disabled={loading}
+                    placeholder="What is on your mind"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <div className=" flex gap-x-1 md:gap-x-2">
+            {!preview && (
               <FormField
                 control={form.control}
                 name="image"
@@ -141,9 +138,11 @@ export const PostForm = () => {
                           id="cameraInput"
                           onChange={(e) => {
                             onUpload(e);
+                            
                           }}
                         />
                         <Button
+                          size={"sm"}
                           disabled={pending}
                           type="button"
                           onClick={() =>
@@ -151,44 +150,38 @@ export const PostForm = () => {
                           }
                           className=""
                         >
-                          <CameraIcon className=" text-accent size-4" />
+                          <CameraIcon className=" size-3 text-secondary" />
                         </Button>
-                        <p className=" text-xs text-accent-foreground/50">
-                          Upload image
-                        </p>
                       </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {preview && (
-                <div className=" relative">
-                  <XIcon
-                    onClick={() => {
-                      setPreview("");
-                    }}
-                    className=" bg-destructive p-px size-3.5 absolute -top-3 -right-2 text-background rounded-full border "
-                  />
-                  <Image
-                    src={preview}
-                    width={29}
-                    height={29}
-                    alt="logo"
-                    className=""
-                  />
-                </div>
-              )}
-            </div>
-
-            <FormSuccess message={success} />
-            <FormError message={error} />
+            )}
+            {preview && (
+              <div className=" relative flex justify-center items-center">
+                <XIcon
+                  onClick={() => {
+                    setPreview("");
+                  }}
+                  className=" bg-destructive p-px size-3.5 absolute -top-3 -right-2 text-background rounded-full border "
+                />
+                <Image
+                  src={preview}
+                  width={33}
+                  height={33}
+                  alt="logo"
+                  className=""
+                />
+              </div>
+            )}
+            <Button size={"sm"} disabled={loading} type="submit">
+              <Send className=" size-3" />
+            </Button>
           </div>
-          <Button disabled={loading} className=" w-full" type="submit">
-            Submit
-          </Button>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 };

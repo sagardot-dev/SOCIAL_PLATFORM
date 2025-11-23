@@ -4,6 +4,7 @@ import { CardWrapper } from "../components/card-warpper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RegisterForm } from "../components/register-form";
 import { LoginForm } from "../components/login-form";
+import { ModeToggle } from "@/components/global/mode-toggle";
 
 //  children,
 //  headerlabel,
@@ -15,6 +16,9 @@ export const SignInView = () => {
 
   return (
     <div className=" w-full min-h-screen pt-20 flex justify-center relative">
+      <div className=" absolute top-4 right-9">
+        <ModeToggle />
+      </div>
       <div className=" max-w-7xl mx-auto flex-col flex gap-y-6">
         <div className=" flex flex-col justify-center items-center gap-y-1 ">
           <h1 className=" text-4xl font-bold tracking-tight ">Social</h1>

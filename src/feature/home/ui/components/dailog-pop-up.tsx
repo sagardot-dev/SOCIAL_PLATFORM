@@ -15,23 +15,21 @@ import { Plus } from "lucide-react";
 export const DailogPopUp = () => {
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">
-            Create Post
-            <Plus className=" size-4" />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Create Post</DialogTitle>
-            <DialogDescription>
-              What do you like to post today?. Write some content and click post
-            </DialogDescription>
-          </DialogHeader>
-          <PostForm />
-        </DialogContent>
-      </form>
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          Create Post
+          <Plus className=" size-4" />
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent forceMount className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create Post</DialogTitle>
+          <DialogDescription>What do you like to post today?</DialogDescription>
+        </DialogHeader>
+
+        <PostForm />
+      </DialogContent>
     </Dialog>
   );
 };

@@ -26,7 +26,7 @@ export const CardWrapper = ({
   backButtonherf,
 }: CardWarpperProps) => {
   return (
-    <Card className=" md:min-w-110 min-w-95 px-3 flex flex-col py-7 mx-auto max-w-xl ">
+    <Card className=" md:min-w-110 min-w-95 px-3 flex flex-col py-8 mx-auto max-w-xl ">
       <CardHeader>
         <Header header={header} label={headerlabel || ""} />
       </CardHeader>
