@@ -201,7 +201,7 @@ export const CardComponent = () => {
                       <FormLabel className="">Email</FormLabel>
                       <FormControl>
                         <Input
-                          disabled={pending}
+                          disabled={true}
                           className=""
                           placeholder={session?.user?.email}
                           {...field}

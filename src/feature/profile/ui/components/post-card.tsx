@@ -33,7 +33,6 @@ export function PostCard({
   if (!session) return <p>Please login</p>;
   return (
     <Card className="w-full max-w-lg rounded-xl shadow-sm border border-border">
-      {/* Header */}
       <CardHeader className="flex flex-row gap-3 items-center">
         {session.user?.image ? (
           <Avatar className="h-11 w-11">

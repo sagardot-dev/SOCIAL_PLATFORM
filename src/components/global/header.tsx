@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { authClient } from "@/lib/auth-client";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -56,10 +57,14 @@ export const Header = () => {
             <DropdownMenuContent className="w-39" align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuGroup>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={"/profile"}>Profile</Link>
+                </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => authClient.signOut()}>
+                Log out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <ModeToggle />
@@ -74,9 +79,7 @@ export const Logo = () => {
     <>
       <Link className=" flex justify-center items-center gap-x-4" href={"/"}>
         <Image src={"/logo.svg"} width={30} height={30} alt="logo" />
-        <p className=" hidden md:block">
-          Social platform
-        </p>
+        <p className=" hidden md:block">Social platform</p>
       </Link>
     </>
   );
