@@ -12,7 +12,7 @@ export const EmptyState = ({
   image = "/empty.jpg",
 }: Props) => {
   return (
-    <div className="flex flex-col items-center justify-center  gap-y-6 ">
+    <div className=" flex-col flex gap-y-6 ">
       <Image
         className=" animate-pulse w-[90%] h-50"
         src={image}

@@ -8,6 +8,7 @@ import { PostCardSkeletonGrid } from "../components/post-grid-skeleton";
 import { useGetparams } from "../../hooks/params";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { EmptyState } from "@/components/global/empty-state";
 
 export const ProfileView = () => {
   const [{ page }, setParams] = useGetparams();
@@ -47,8 +48,15 @@ export const ProfileView = () => {
           totalReactions={data?.data?._count.reactions}
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 flex-1 gap-4 overflow-y-auto bar  mask-b-from-90% mask-t-from-98% max-h-120 py-6 auto-rows-[1fr]">
-        {data?.data?.post.length === 0 && <p>No post create yet</p>}
+      <div className="grid grid-cols-1 md:grid-cols-3 flex-1 gap-4 overflow-y-auto bar  mask-b-from-90% mask-t-from-98% max-h-120 py-6 auto-rows-[1fr] place-items-center ">
+        {data?.data?.post.length === 0 && (
+          <div className=" col-span-3">
+            <EmptyState
+              title="No content yet"
+              description="please create post to see constnt"
+            />
+          </div>
+        )}
         {data?.data?.post.map((p) => (
           <div
             className=" flex justify-start gap-y-2 gap-x-3 items-start flex-wrap"

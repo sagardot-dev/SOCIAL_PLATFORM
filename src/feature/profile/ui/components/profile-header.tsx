@@ -65,7 +65,6 @@ export function ProfileHeader({
             </div>
           </div>
 
-          {/* === Stats Section === */}
           <div className="mt-4 flex gap-6 text-sm text-muted-foreground">
             <div className="flex flex-col justify-center items-center">
               <span className="text-lg font-semibold text-foreground">
