@@ -5,10 +5,30 @@ import { PostCard } from "../components/post-card";
 import { useGetUserPosts } from "../../server/useget-userpost";
 import { ProfileHeaderSkeleton } from "../components/header-skeleton";
 import { PostCardSkeletonGrid } from "../components/post-grid-skeleton";
+import { useGetparams } from "../../hooks/params";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const ProfileView = () => {
-  const userPostQuery = useGetUserPosts();
+  const [{ page }, setParams] = useGetparams();
+  const userPostQuery = useGetUserPosts(page);
   const { data, isLoading } = userPostQuery;
+  console.log(data);
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setParams({ page: page - 1 });
+    }
+  };
+
+  const handleNextPage = () => {
+    const postsPerPage = 10;
+    const hasMorePosts =
+      data?.data?.post && data.data.post.length === postsPerPage;
+    if (hasMorePosts) {
+      setParams({ page: page + 1 });
+    }
+  };
 
   if (isLoading)
     return (
@@ -18,9 +38,8 @@ export const ProfileView = () => {
       </div>
     );
 
-
   return (
-    <div className=" w-full flex justify-start items-center  flex-col h-full max-w-6xl mx-auto space-y-5 px-4 ">
+    <div className=" w-full flex justify-start items-center  flex-col h-full max-w-6xl mx-auto space-y-5 px-4 pb-8 ">
       <div className=" w-full flex ">
         <ProfileHeader
           totalPosts={data?.data?._count.post}
@@ -28,7 +47,7 @@ export const ProfileView = () => {
           totalReactions={data?.data?._count.reactions}
         />
       </div>
-      <div className="grid md:grid-cols-3 gap-4 overflow-y-auto bar  mask-b-from-90% mask-t-from-98% max-h-150 py-6 auto-rows-[1fr]">
+      <div className="grid grid-cols-1 md:grid-cols-3 flex-1 gap-4 overflow-y-auto bar  mask-b-from-90% mask-t-from-98% max-h-120 py-6 auto-rows-[1fr]">
         {data?.data?.post.length === 0 && <p>No post create yet</p>}
         {data?.data?.post.map((p) => (
           <div
@@ -46,6 +65,33 @@ export const ProfileView = () => {
           </div>
         ))}
       </div>
+      {data?.data && (
+        <div className="flex items-center justify-center gap-4 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handlePrevPage}
+            disabled={page === 1}
+            className="gap-2"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Previous
+          </Button>
+
+          <span className="text-sm text-muted-foreground">Page {page}</span>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleNextPage}
+            disabled={!data?.data?.post || data.data.post.length < 10}
+            className="gap-2"
+          >
+            Next
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

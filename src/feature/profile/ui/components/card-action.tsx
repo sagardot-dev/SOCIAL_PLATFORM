@@ -25,7 +25,7 @@ export function CardActions({ postId }: { postId: string }) {
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-46" align="start">
+      <DropdownMenuContent className="w-46" align="end">
         <DropdownMenuLabel>Edit Post</DropdownMenuLabel>
         <DropdownMenuSeparator />
 

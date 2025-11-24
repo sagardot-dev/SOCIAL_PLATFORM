@@ -13,6 +13,8 @@ import { CommentBox } from "./comment-draw";
 import { randomName } from "@/lib/helpers/random-name";
 import { useToggleReaction } from "../../server/use-like";
 import { s3URL } from "@/const ";
+import { CardActions } from "@/feature/profile/ui/components/card-action";
+import { CustomToast } from "@/components/global/custom-toast";
 
 export function PostCard({ post }: { post: PostType }) {
   const useLikeMutate = useToggleReaction();
@@ -26,37 +28,59 @@ export function PostCard({ post }: { post: PostType }) {
     setIsLiked((val) => !val);
     useLikeMutate.mutate(post.id);
   };
+  const handleShare = async () => {
+    const shareUrl = `${window.location.origin}/post/${post.id}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Check this post",
+          text: post.content.slice(0, 100),
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.log("Share canceled:", err);
+      }
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      CustomToast("Link copied to clipboard!", "share_copied");
+    }
+  };
 
   return (
     <Card className="w-full max-w-2xl rounded-xl shadow-sm border border-border">
-      <CardHeader className="flex flex-row gap-3 items-center">
-        {post.user?.image ? (
-          <Avatar className="h-11 w-11">
-            <AvatarImage
-              src={`${s3URL}/${user?.image}` || ""}
-              alt={user?.name || "U"}
-            />
-            <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
-          </Avatar>
-        ) : (
-          <GenAvatarImage name={user?.name || randomName()} />
-        )}
+      <CardHeader className="flex flex-row gap-3 items-center justify-between">
+        <div className=" flex gap-x-2">
+          {post.user?.image ? (
+            <Avatar className="h-11 w-11">
+              <AvatarImage
+                src={`${s3URL}/${user?.image}` || ""}
+                alt={user?.name || "U"}
+              />
+              <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
+            </Avatar>
+          ) : (
+            <GenAvatarImage name={user?.name || randomName()} />
+          )}
 
-        <div className="flex flex-col">
-          <span className="font-semibold text-card-foreground text-[15px]">
-            {user?.name}
-          </span>
-          <span className="text-muted-foreground text-[13px]">
-            {new Date(post.createdAt).toLocaleTimeString(undefined, {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })}
-          </span>
+          <div className="flex flex-col">
+            <span className="font-semibold text-card-foreground text-[15px]">
+              {user?.name}
+            </span>
+            <span className="text-muted-foreground/50 text-sm">
+              {new Date(post.createdAt).toLocaleTimeString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              })}
+            </span>
+          </div>
         </div>
+
+        <CardActions postId={post.id} />
       </CardHeader>
 
       <CardContent className="space-y-4 w-full ">
@@ -107,6 +131,7 @@ export function PostCard({ post }: { post: PostType }) {
           <CommentForm postId={post.id} />
 
           <Button
+            onClick={handleShare}
             variant="ghost"
             size="sm"
             className="gap-2 hover:bg-accent/50 rounded-lg shrink hidden md:flex"
