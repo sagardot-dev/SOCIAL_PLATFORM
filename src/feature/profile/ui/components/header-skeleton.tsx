@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function ProfileHeaderSkeleton() {
   return (
-    <Card className="w-full bg-card/80 border border-border/60 rounded-2xl shadow-md">
+    <Card className="w-full bg-card/80 border border-border/60 rounded-2xl shadow-md pt-6">
       <CardHeader className="flex items-center gap-6 p-6">
 
         {/* Avatar */}

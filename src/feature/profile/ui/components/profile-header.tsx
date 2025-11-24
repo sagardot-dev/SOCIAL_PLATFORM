@@ -25,25 +25,27 @@ export function ProfileHeader({
 
   return (
     <Card className="w-full bg-card/80 border border-border/60 rounded-2xl shadow-md">
-      <CardHeader className="flex items-center gap-6 p-6">
-        {session.user?.image ? (
-          <Avatar className="h-11 w-11">
-            <AvatarImage
-              src={`${s3URL}/${session.user?.image}` || ""}
-              alt={session.user?.name || "U"}
+      <CardHeader className="flex flex-col justify-start items-start w-full md:flex-row gap-x-6">
+        <div>
+          {session.user?.image ? (
+            <Avatar className="h-11 w-11">
+              <AvatarImage
+                src={`${s3URL}/${session.user?.image}` || ""}
+                alt={session.user?.name || "U"}
+              />
+              <AvatarFallback>
+                {session.user?.name?.charAt(0) || "U"}
+              </AvatarFallback>
+            </Avatar>
+          ) : (
+            <GenAvatarImage
+              className="size-13"
+              name={session.user?.name || randomName()}
             />
-            <AvatarFallback>
-              {session.user?.name?.charAt(0) || "U"}
-            </AvatarFallback>
-          </Avatar>
-        ) : (
-          <GenAvatarImage
-            className="size-13"
-            name={session.user?.name || randomName()}
-          />
-        )}
+          )}
+        </div>
 
-        <div className="flex-1">
+        <div className="flex-1 w-full">
           <div className="flex items-center justify-between gap-4">
             <div>
               <h2 className="text-2xl font-semibold leading-tight">
@@ -67,24 +69,24 @@ export function ProfileHeader({
 
           <div className="mt-4 flex gap-6 text-sm text-muted-foreground">
             <div className="flex flex-col justify-center items-center">
-              <span className="text-lg font-semibold text-foreground">
+              <span className="md:text-lg text-sm font-semibold text-foreground">
                 {totalPosts}
               </span>
-              <span className="uppercase tracking-widest">Posts</span>
+              <span className="uppercase text-sm md:text-lg tracking-widest">Posts</span>
             </div>
 
             <div className="flex flex-col justify-center items-center">
-              <span className="text-lg font-semibold text-foreground">
+              <span className="md:text-lg text-sm font-semibold text-foreground">
                 {totalReactions}
               </span>
-              <span className="uppercase tracking-widest">Likes</span>
+              <span className="uppercase text-sm md:text-lg tracking-widest">Likes</span>
             </div>
 
             <div className="flex flex-col justify-center items-center">
-              <span className="text-lg font-semibold text-foreground">
+              <span className="md:text-lg text-sm font-semibold text-foreground">
                 {totalComments}
               </span>
-              <span className="uppercase tracking-widest">Comments</span>
+              <span className="uppercase text-sm md:text-lg tracking-widest">Comments</span>
             </div>
           </div>
         </div>

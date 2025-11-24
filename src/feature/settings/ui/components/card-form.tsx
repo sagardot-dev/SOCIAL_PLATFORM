@@ -112,9 +112,9 @@ export const CardComponent = () => {
   if (!session) return;
 
   return (
-    <Card className=" py-13! px-1">
-      <CardHeader className="flex flex-col justify-center items-center max-w-3xl min-w-md">
-        <CardTitle className="text-2xl font-bold">
+    <Card className=" py-13! px-1 min-w-xs md:min-w-md mx-auto">
+      <CardHeader className="flex flex-col justify-center items-center">
+        <CardTitle className="md:text-2xl font-bold">
           Update Your Profile
         </CardTitle>
         <p className="text-muted-foreground ">Your profile information</p>

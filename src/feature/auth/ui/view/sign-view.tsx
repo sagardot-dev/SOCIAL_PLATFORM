@@ -22,16 +22,16 @@ export const SignInView = () => {
       <div className=" max-w-7xl mx-auto flex-col flex gap-y-6">
         <div className=" flex flex-col justify-center items-center gap-y-1 ">
           <h1 className=" text-4xl font-bold tracking-tight ">Social</h1>
-          <p className=" text-base text-balance text-secondary/50">
+          <p className=" text-base text-secondary/50 max-w-2xs mx-auto text-center">
             Connect with frineds and share your moments
           </p>
         </div>
         <Tabs
-          className=" w-full "
+          className=" w-full flex justify-center items-center "
           value={tab}
           onValueChange={(value) => setTab(value as "login" | "register")}
         >
-          <TabsList className=" min-w-md bg-accent/50 backdrop-blur-sm p-p border border-border/50 rounded-full  mb-2 h-11">
+          <TabsList className=" min-w-3xs md:min-w-md bg-accent/50 backdrop-blur-sm p-p border border-border/50 rounded-full  mb-2 h-11">
             <TabsTrigger className=" rounded-full" value="login">
               Login
             </TabsTrigger>

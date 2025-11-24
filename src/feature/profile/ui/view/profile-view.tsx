@@ -33,14 +33,14 @@ export const ProfileView = () => {
 
   if (isLoading)
     return (
-      <div className="w-full flex flex-col items-center h-full max-w-6xl mx-auto space-y-5 px-4">
+      <div className="w-full flex flex-col items-center  max-w-6xl mx-auto space-y-5 px-4 py-5">
         <ProfileHeaderSkeleton />
         <PostCardSkeletonGrid />
       </div>
     );
 
   return (
-    <div className=" w-full flex justify-start items-center  flex-col h-full max-w-6xl mx-auto space-y-5 px-4 pb-8 ">
+    <div className=" w-full flex justify-start items-center  flex-col max-w-6xl mx-auto  px-4 pb-3 md:pb-6 md:pt-6 ">
       <div className=" w-full flex ">
         <ProfileHeader
           totalPosts={data?.data?._count.post}
@@ -48,7 +48,7 @@ export const ProfileView = () => {
           totalReactions={data?.data?._count.reactions}
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 flex-1 gap-4 overflow-y-auto bar  mask-b-from-90% mask-t-from-98% max-h-120 py-6 auto-rows-[1fr] place-items-center ">
+      <div className="grid grid-cols-1 md:grid-cols-3 flex-1 gap-4 overflow-y-auto bar  mask-b-from-90% mask-t-from-98% max-h-120 md:max-h-210 py-6 auto-rows-[1fr] place-items-center  ">
         {data?.data?.post.length === 0 && (
           <div className=" col-span-3">
             <EmptyState

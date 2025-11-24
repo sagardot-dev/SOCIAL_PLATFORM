@@ -55,7 +55,7 @@ export function PostCard({
   };
 
   return (
-    <Card className="w-full max-w-lg rounded-xl shadow-sm border border-border">
+    <Card className="w-full max-w-lg rounded-xl shadow-sm border border-border min-w-xs">
       <CardHeader className="flex flex-row gap-3 items-center justify-between">
         <div className=" flex-1 w-full flex gap-x-2 justify-start items-center ">
           {session.user?.image ? (

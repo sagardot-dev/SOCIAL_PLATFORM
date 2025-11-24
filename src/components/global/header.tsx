@@ -20,13 +20,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { authClient } from "@/lib/auth-client";
+import { MobileMenu } from "./menu-sheet-mobile";
 
 export const Header = () => {
   const pathname = usePathname();
   const isMobile = useIsMobile();
   return (
-    <div className="w-full ">
-      <Container className=" h-18 flex items-center gap-x-6  w-full justify-between border-b border-border/60 max-w-6xl px-8 md:p-5 ">
+    <>
+      <Container className=" gap-x-6  w-full border-b border-border/60 max-w-6xl px-5! md:p-5 h-15 justify-between items-center flex ">
         <Logo />
         {!isMobile && (
           <div className="flex gap-x-8">
@@ -68,9 +69,10 @@ export const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           <ModeToggle />
+          <MobileMenu />
         </div>
       </Container>
-    </div>
+    </>
   );
 };
 

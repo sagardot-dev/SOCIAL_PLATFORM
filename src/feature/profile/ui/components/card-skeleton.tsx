@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function PostCardSkeleton() {
   return (
-    <Card className="w-full rounded-xl shadow-sm border border-border min-w-xs gap-3">
+    <Card className="w-full rounded-xl shadow-sm border border-border min-w-xs gap-3 pt-6">
       <CardHeader className="flex flex-row gap-3 items-center">
         <Skeleton className="h-11 w-11 rounded-full" />
 

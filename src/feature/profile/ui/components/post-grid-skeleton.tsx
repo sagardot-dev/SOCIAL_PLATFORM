@@ -6,7 +6,7 @@ export function PostCardSkeletonGrid() {
       className="
         grid md:grid-cols-3 gap-4 
         auto-rows-[1fr] py-6 
-        overflow-y-auto bar 
+        overflow-y-auto bar max-h-120 md:max-h-210 
         mask-b-from-90% mask-t-from-98%
       "
     >
