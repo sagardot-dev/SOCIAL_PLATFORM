@@ -22,7 +22,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
 import { useGetComments } from "../../server/use-get-comments";
 import { GenAvatarImage } from "@/components/global/generate-avavtar";
-import { randomName } from "@/lib/helpers/randoem-name";
+import { randomName } from "@/lib/helpers/random-name";
 import { MoreVertical, PencilIcon, Trash2 } from "lucide-react";
 
 export const CommentBox = ({

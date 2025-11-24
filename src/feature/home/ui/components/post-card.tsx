@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -10,15 +10,11 @@ import { PostType } from "@/types";
 import { GenAvatarImage } from "@/components/global/generate-avavtar";
 import { CommentForm } from "./comment-form";
 import { CommentBox } from "./comment-draw";
-import { randomName } from "@/lib/helpers/randoem-name";
+import { randomName } from "@/lib/helpers/random-name";
 import { useToggleReaction } from "../../server/use-like";
 import { s3URL } from "@/const ";
 
-export function PostCard({
-  post,
-}: {
-  post: PostType;
-}) {
+export function PostCard({ post }: { post: PostType }) {
   const useLikeMutate = useToggleReaction();
   const [open, setOpen] = useState(false);
 
@@ -75,7 +71,7 @@ export function PostCard({
               alt="post visual"
               width={450}
               height={450}
-              className="rounded-lg  object-cover animate-fadeIn"
+              className="rounded-lg h-auto w-full  animate-fadeIn"
             />
           </div>
         )}

@@ -6,7 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { GenAvatarImage } from "@/components/global/generate-avavtar";
-import { randomName } from "@/lib/helpers/randoem-name";
+import { randomName } from "@/lib/helpers/random-name";
 import { useRouter } from "next/navigation";
 import { s3URL } from "@/const ";
 

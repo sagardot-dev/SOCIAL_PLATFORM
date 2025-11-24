@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { PostSchema } from "@/lib/schema";
 
 import { CustomToast } from "@/components/global/custom-toast";
@@ -183,7 +183,7 @@ export const PostForm = () => {
             <FormSuccess message={success} />
             <FormError message={error} />
           </div>
-          <Button disabled={loading} className=" w-full" type="submit">
+          <Button disabled={pending} className=" w-full" type="submit">
             Submit
           </Button>
         </form>

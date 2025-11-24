@@ -18,6 +18,7 @@ export const ProfileView = () => {
       </div>
     );
 
+
   return (
     <div className=" w-full flex justify-start items-center  flex-col h-full max-w-6xl mx-auto space-y-5 px-4 ">
       <div className=" w-full flex ">
