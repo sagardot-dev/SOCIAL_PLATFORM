@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
-import { useDeletePost } from "../../server/use-delete-post";
+import { useDeletePost } from "../../../home/server/use-delete-post";
 
 export function CardActions({ postId }: { postId: string }) {
   const deletePostMutation = useDeletePost();

@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -7,14 +8,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import React from "react";
+import React, { useState } from "react";
 import { PostForm } from "./post-form";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export const DailogPopUp = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
           Create Post
@@ -22,13 +24,18 @@ export const DailogPopUp = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent forceMount className="sm:max-w-[425px]">
+      <DialogContent
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+        forceMount
+        className="sm:max-w-[425px]"
+      >
         <DialogHeader>
           <DialogTitle>Create Post</DialogTitle>
           <DialogDescription>What do you like to post today?</DialogDescription>
         </DialogHeader>
 
-        <PostForm />
+        <PostForm onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

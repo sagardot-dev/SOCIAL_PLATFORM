@@ -1,0 +1,13 @@
+//neon db
+DATABASE_URL=
+
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=
+
+//optional for email
+RESEND_API_KEY=
+
+
+//for s3 bucket
+KEY_AWS_ACCESS_KEY=
+AWS_REGION=

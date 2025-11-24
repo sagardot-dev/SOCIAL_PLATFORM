@@ -24,6 +24,7 @@ import { useGetComments } from "../../server/use-get-comments";
 import { GenAvatarImage } from "@/components/global/generate-avavtar";
 import { randomName } from "@/lib/helpers/random-name";
 import { MoreVertical, PencilIcon, Trash2 } from "lucide-react";
+import { useDeleteComment } from "../../server/use-delete-comment";
 
 export const CommentBox = ({
   open,
@@ -34,6 +35,7 @@ export const CommentBox = ({
   setOpen: (open: boolean) => void;
   postId: string;
 }) => {
+  const deleteCommentMutation = useDeleteComment();
   const { data: comments, isLoading } = useGetComments(postId);
 
   return (
@@ -95,7 +97,10 @@ export const CommentBox = ({
                   </div>
                   <div>
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                      <DropdownMenuTrigger
+                        disabled={deleteCommentMutation.isPending}
+                        asChild
+                      >
                         <Button size={"icon-sm"} variant="outline">
                           <MoreVertical />
                         </Button>
@@ -104,20 +109,25 @@ export const CommentBox = ({
                         className="w-30 flex flex-col gap-y-0! p-1!"
                         align="end"
                       >
-                        <DropdownMenuLabel
-                          asChild
-                          className=" flex gap-x-2 justify-start"
-                        >
-                          <Button
-                            className=" w-full"
-                            size={"icon-sm"}
-                            variant="ghost"
+                        {!comments && (
+                          <DropdownMenuLabel
+                            asChild
+                            className=" flex gap-x-2 justify-start"
                           >
-                            <PencilIcon className=" size-4" />
-                            Edit
-                          </Button>
-                        </DropdownMenuLabel>
+                            <Button
+                              className=" w-full"
+                              size={"icon-sm"}
+                              variant="ghost"
+                            >
+                              <PencilIcon className=" size-4" />
+                              Edit
+                            </Button>
+                          </DropdownMenuLabel>
+                        )}
                         <DropdownMenuLabel
+                          onClick={() => {
+                            deleteCommentMutation.mutate({ commentId: c.id });
+                          }}
                           className=" flex gap-x-2 justify-start"
                           asChild
                         >

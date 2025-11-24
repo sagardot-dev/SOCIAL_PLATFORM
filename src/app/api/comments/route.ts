@@ -135,3 +135,69 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  const body = await req.json();
+  const { commentId } = body;
+
+  if (!commentId) {
+    return Response.json(
+      createResponse(false, 
+        ResponseTitle.INVALID_INPUT, 
+        "Missing comment ID"),
+      { status: HttpStatus.BAD_REQUEST }
+    );
+  }
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session || !session.user) {
+    return Response.json(
+      createResponse(false, 
+        ResponseTitle.UNAUTHORIZED, 
+        "Unauthorized"),
+      { status: HttpStatus.UNAUTHORIZED }
+    );
+  }
+
+  try {
+    const existing = await prisma.comment.findFirst({
+      where: {
+        id: commentId,
+        userId: session.user.id,
+      },
+    });
+
+    if (!existing) {
+      return Response.json(
+        createResponse(false, 
+          ResponseTitle.NOT_FOUND, 
+          "Comment not found"),
+        { status: HttpStatus.NOT_FOUND }
+      );
+    }
+
+    await prisma.comment.delete({
+      where: { id: commentId },
+    });
+
+    return Response.json(
+      createResponse(true, 
+        ResponseTitle.SUCCESS, 
+        "Comment deleted"),
+      { status: HttpStatus.OK }
+    );
+  } catch (error) {
+    return Response.json(
+      createResponse(
+        false,
+        ResponseTitle.INTERNAL_SERVER_ERROR,
+        "Delete failed",
+        { message: error instanceof Error ? error.message : "Unknown error" }
+      ),
+      { status: HttpStatus.INTERNAL_SERVER_ERROR }
+    );
+  }
+}

@@ -20,6 +20,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  runtime: "nodejs",
   matcher: ["/profile/:path*", "/setting/:path*", "/:path*"],
 };

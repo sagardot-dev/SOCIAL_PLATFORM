@@ -29,7 +29,7 @@ import Image from "next/image";
 import { CameraIcon, XIcon } from "lucide-react";
 import { useCreatePost } from "../../server/use-create-post";
 
-export const PostForm = () => {
+export const PostForm = ({ onSuccess }: { onSuccess?: () => void }) => {
   const postMutation = useCreatePost();
   const signUrlMutation = useGetSignUrlMutation();
   const [preview, setPreview] = useState("");
@@ -98,6 +98,8 @@ export const PostForm = () => {
           setSuccess(data.title);
           setLoading(false);
           setError("");
+          onSuccess?.(); 
+          form.reset();
         },
       }
     );
