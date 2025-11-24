@@ -63,3 +63,14 @@ pnpm prisma generate
 
 ▶️ Running the Project loaclly
 pnpm dev
+
+
+🌐 Features
+🔐 Better Auth user authentication
+👤 User profiles
+📝 Create posts
+❤️ Likes & reactions
+💬 Comments
+🖼️ AWS S3 media uploads
+🔄 React Query data caching
+⚡ API routes
